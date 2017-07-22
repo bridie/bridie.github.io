@@ -1,0 +1,53 @@
+.menu {
+    background: white;
+    bottom: 0;
+    color: #333E48;
+    height: 100vh;
+    left: -300px;
+    position: fixed;
+    top: 0px;
+    width: 300px;
+
+    &__title {
+        font-size: 30px;
+        margin: 30px 50px;
+    }
+
+    &__item {
+        border-top: 1px solid #b0b1b2;
+        cursor: pointer;
+        padding: 15px 40px;
+
+        &:last-child {
+            border-bottom: 1px solid #b0b1b2;
+        }
+
+        &:hover {
+            background-color: #dbdee0;
+        }
+
+        &--back {
+            &:after {
+                content: "\f054";
+                font-family: FontAwesome;
+                float: right;
+                line-height: 23px;
+            }
+        }
+    }
+
+    &__link {
+        color: #333E48;
+        font-size: 18px;
+
+        &--parent:before {
+            content: "\f053";
+            font-family: FontAwesome;
+            margin-right: 10px;
+        }
+
+        &--singular {
+            margin-left: 20px;
+        }
+    }
+}

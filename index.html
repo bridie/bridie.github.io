@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Colorful Pages</title>
+        <meta name="description" content="A multi-level push state menu that shows colorful pages - how exciting!" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+        <script src="https://use.fontawesome.com/032484ee61.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="./build/css/stylesheet.css" media="all" />
+    </head>
+
+    <!-- I have created a multi level menu, that gives the user the option to change the page color -->
+    <body>
+        <div class="burger-menu">
+            <span class="burger-menu__line"></span>
+            <span class="burger-menu__line"></span>
+            <span class="burger-menu__line"></span>
+        </div>
+        <nav class="menu">
+            <h2 class="menu__title">Page colors</h2>
+            <ul class="menu__list">
+                <li class="menu__item">
+                    <a href="#" class="menu__link menu__link--parent">Green pages</a>
+                    <div class="menu menu__sub">
+                        <h3 class="menu__title">Green pages</h3>
+                        <ul class="menu__list">
+                            <li class="menu__item menu__item--back">
+                                <a href="#" class="menu__link menu__link--singular">Back</a>
+                            </li>
+                            <li class="menu__item" data-color="teal">
+                                <a href="#" class="menu__link menu__link--singular">Teal page</a>
+                            </li>
+                            <li class="menu__item" data-color="lime">
+                                <a href="#" class="menu__link menu__link--singular">Lime page</a>
+                            </li>
+                            <li class="menu__item" data-color="green">
+                                <a href="#" class="menu__link menu__link--singular">Green page</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="menu__item">
+                    <a href="#" class="menu__link menu__link--parent">Blue pages</a>
+                    <div class="menu menu__sub">
+                        <h3 class="menu__title">Blue pages</h3>
+                        <ul class="menu__list">
+                            <li class="menu__item menu__item--back">
+                                <a href="#" class="menu__link menu__link--singular">Back</a>
+                            </li>
+                            <li class="menu__item" data-color="navy">
+                                <a href="#" class="menu__link menu__link--singular">Navy page</a>
+                            </li>
+                            <li class="menu__item" data-color="light-blue">
+                                <a href="#" class="menu__link menu__link--singular">Light blue page</a>
+                            </li>
+                            <li class="menu__item" data-color="blue">
+                                <a href="#" class="menu__link menu__link--singular">Blue page</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="menu__item" data-color="pink">
+                    <a href="#" class="menu__link menu__link--singular">pink page</a>
+                </li>
+                <li class="menu__item" data-color="yellow">
+                    <a href="#" class="menu__link menu__link--singular">yellow page</a>
+                </li>
+                <li class="menu__item" data-color="red">
+                    <a href="#" class="menu__link menu__link--singular">red page</a>
+                </li>
+            </ul>
+        </nav>
+        <main class="l-main l-main--black">
+            <h1>Colorful Pages</h1>
+        </main>
+        <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous">
+        </script>
+
+        <!-- I would NEVER normally write inline JS but as this is a quick demo task I have done for simplicity -->
+        <script>
+            $(document).ready(function() {
+
+                // Code for the menu close.
+                function closeMenu() {
+                    $('.menu').animate({
+                        left: "-300px"
+                    }, 300);
+
+                    $('body').animate({
+                        left: "0px"
+                    }, 300);
+
+                    $('.burger-menu').removeClass('open');
+                }
+
+                // Code for the menu open.
+                function openMenu() {
+                    $('.menu').first().animate({
+                        left: "0px"
+                    }, 300);
+
+                    $('body').animate({
+                        left: "300px"
+                    }, 300);
+
+                    $('.burger-menu').addClass('open');
+                }
+
+                $('.burger-menu').click(function() {
+                    var isOpen = $(this).hasClass('open');
+                    isOpen ? closeMenu() : openMenu();
+                    return false;
+                });
+
+                $('.menu__item').click(function() {
+                    var isBack = $(this).hasClass('menu__item--back');
+
+                    // If the back button is clicked, close the most recently opened menu.
+                    if (isBack) {
+                        $(this).closest('.menu').animate({
+                            left: "-300px"
+                        }, 300);
+
+                        return false;
+                    }
+
+                    var subMenu = $(this).find('.menu__sub');
+                    var hasSubMenu = subMenu.length;
+
+                    if (hasSubMenu) {
+                        // If the menu item has a sub menu, open it.
+                        subMenu.animate({
+                            left: "0px"
+                        }, 300);
+                    } else {
+                        // Get the selected page color.
+                        var pageColor = $(this).data('color');
+
+                        // Remove the .l-main--{color} modifier.
+                        $('.l-main').removeClass (function (index, className) {
+                            return (className.match (/(^|\s)l-main--\S+/g) || []).join(' ');
+                        });
+
+                        // Add the selected .l-main--{color} modifier
+                        $('.l-main').addClass('l-main--' + pageColor);
+
+                        // Close the menu once a page color has been selected.
+                        closeMenu();
+                        $('.burger-menu').removeClass('open');
+
+                        return false;
+                    }
+                });
+            });
+        </script>
+
+    </body>
+</html>
